@@ -1,0 +1,19 @@
+{
+  "name": "sql-workbench-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "debug": "node-debug -c -p 3031 sls offline start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "pg": "^8.0.2"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.1.4"
+  }
+}
