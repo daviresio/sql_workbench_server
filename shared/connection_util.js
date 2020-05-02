@@ -1,3 +1,5 @@
+//TODO implementar conexao por ssl
+
 const clientBuilder = v => {
     return  {
         host: v.host,
