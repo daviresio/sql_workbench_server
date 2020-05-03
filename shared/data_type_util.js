@@ -7,18 +7,14 @@ const dataTypeIdPostgresToString = v => {
         case 21:
         case 23:
             return 'int';
+        case 25:
+            return 'text';
         case 1043:
             return 'varchar';
         case 1114:
             return 'timestamp';
         case 1700:
             return 'numeric';
-        // case :
-        //     return '';
-        // case :
-        //     return '';
-        // case :
-        //     return '';
         default:
             console.log(v)
             throw new Error(`DataType nao encontrado, oid ${v}`)

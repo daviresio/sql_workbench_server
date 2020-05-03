@@ -14,7 +14,6 @@ module.exports.handler = async (event) => {
     try {
         await client.connect()
         const res = await client.query(body.query)
-        console.log(res)
         return sucessResponse({data: res.rows, types: res.fields.map(v => ({
                 columnName: v.name,
                 tableId: v.tableID,

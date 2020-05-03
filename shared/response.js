@@ -1,4 +1,4 @@
-const sucessResponse = v => {
+const sucessResponse = (v = '') => {
     return {
         statusCode: 200,
         body: JSON.stringify(v)

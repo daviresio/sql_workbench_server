@@ -1,6 +1,6 @@
 
 const extractErrorMessage = e => {
-    return Object.getOwnPropertyDescriptor(e, 'message').value
+    return JSON.stringify({message: Object.getOwnPropertyDescriptor(e, 'message').value})
 }
 
 module.exports = {
