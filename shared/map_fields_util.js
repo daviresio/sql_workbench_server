@@ -19,11 +19,17 @@ const fetchTableData = async (client, reqData) => {
 
         let columnNames = await client.query(`select column_name, ordinal_position from information_schema.columns where table_name = '${tableName}'`)
 
-        columnNames = columnNames.rows.map((column => ({
-            originalColumnName: column.column_name,
-            columnIndex: column.ordinal_position,
-            reqColumnName: reqData.get(key).filter(x => x.columnIndex === column.ordinal_position)[0].columnName,
-        })))
+        columnNames = columnNames.rows.map((column => {
+            let reqColumnName = reqData.get(key).filter(x => x.columnIndex === column.ordinal_position)[0]
+            if(reqColumnName === undefined) throw new Error(`primary key not present in query for table ${tableName}`)
+            columnName = column.column_name
+
+            return {
+                originalColumnName: column.column_name,
+                columnIndex: column.ordinal_position,
+                reqColumnName,
+            }
+        }))
 
         let primaryKey = await client.query(`select column_name from information_schema.key_column_usage where table_name = '${tableName}' and constraint_name like '%pk%'`)
 
@@ -47,19 +53,25 @@ const fetchTableData = async (client, reqData) => {
 }
 
 const getPrimaryKeyValue = (tableData, data) => {
-    const primaryKeyColumnsName = tableData.columnNames.filter(v => v.originalColumnName === tableData.primaryKey)[0]
+    const primaryKeyColumnsName = tableData.columnNames.filter(v => {
+        return v.originalColumnName === tableData.primaryKey
+    })[0]
 
     if(!primaryKeyColumnsName) {
         throw new Error(`no primary key found, primary key must be send`)
     }
-
-    return data[primaryKeyColumnsName.reqColumnName]
+    return data[primaryKeyColumnsName.reqColumnName.columnName]
 }
 
 const putQuoteStringValue = v => {
     if(typeof v === "string") {
         v = `'${v}'`
     }
+
+    if(v === null) {
+        return 'null'
+    }
+
     return v
 }
 

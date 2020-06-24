@@ -12,6 +12,7 @@ const dataTypeIdPostgresToString = v => {
         case 1043:
             return 'varchar';
         case 1114:
+        case 1184:
             return 'timestamp';
         case 1700:
             return 'numeric';
