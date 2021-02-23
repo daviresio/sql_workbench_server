@@ -22,6 +22,7 @@ org: daviresio
 
 plugins:
   - serverless-offline
+  - serverless-plugin-typescript
 
 provider:
   name: aws
