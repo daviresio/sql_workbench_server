@@ -1,12 +1,12 @@
-const {Client} = require('pg')
-require('../pg_config')
+import {Client} from 'pg'
+import '../pg_config'
 
-const {extractErrorMessage} = require('../../shared/error')
-const {sucessResponse, errorResponse} = require('../../shared/response')
-const {clientBuilder} = require('../../shared/connection_util')
-const {typesToMap, fetchTableData, getPrimaryKeyValue, putQuoteStringValue} = require('../../shared/map_fields_util')
+import {extractErrorMessage} from '../../shared/error'
+import {sucessResponse, errorResponse} from '../../shared/response'
+import {clientBuilder} from '../../shared/connection_util'
+import {typesToMap, fetchTableData, getPrimaryKeyValue, putQuoteStringValue} from '../../shared/map_fields_util'
 
-module.exports.handler = async (event) => {
+export const handler = async (event) => {
     const body = JSON.parse(event.body)
 
     const client = new Client(clientBuilder(body.connection))

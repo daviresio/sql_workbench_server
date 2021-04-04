@@ -1,0 +1,19 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceRoot}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run-script", "debug"],
+      "preLaunchTask": "tsc: build - tsconfig.json",
+      "outFiles": [
+          "${workspaceFolder}/.build/**/*.js"
+      ],
+      "port": 9229 
+    }
+  ]
+}
+

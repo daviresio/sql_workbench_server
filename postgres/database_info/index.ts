@@ -1,17 +1,17 @@
-const {Client} = require('pg')
-require('../pg_config')
+import {Client} from 'pg'
+import '../pg_config'
 
-const {extractErrorMessage} = require('../../shared/error')
-const {sucessResponse, errorResponse} = require('../../shared/response')
-const {clientBuilder} = require('../../shared/connection_util')
-const {nonNullArr} = require('../../shared/operation_util')
+import {extractErrorMessage} from '../../shared/error'
+import {sucessResponse, errorResponse} from '../../shared/response'
+import {clientBuilder} from '../../shared/connection_util'
+import {nonNullArr} from '../../shared/operation_util'
 
-module.exports.handler = async (event) => {
+export const handler = async (event) => {
     let client
     try {
         const body = JSON.parse(event.body)
         client = new Client(clientBuilder(body))
-
+        console.log('############### ENTREI ###############');
 
         await client.connect()
         const resDatabases = await client.query("SELECT datname FROM pg_database")
@@ -35,6 +35,7 @@ module.exports.handler = async (event) => {
             functions: nonNullArr(resFunctions.rows).map(v => v.routine_name),
         }
 
+        //@ts-ignore
         return sucessResponse(responseBody)
     } catch (e) {
         return errorResponse(extractErrorMessage(e))

@@ -1,6 +1,6 @@
 //TODO implementar conexao por ssl
 
-const clientBuilder = v => {
+export const clientBuilder = v => {
     return  {
         host: v.host,
         user: v.user,
@@ -8,8 +8,4 @@ const clientBuilder = v => {
         database: v.databaseName,
         port: v.port,
     }
-}
-
-module.exports = {
-    clientBuilder,
 }

@@ -1,4 +1,4 @@
-const typesToMap = types => {
+export const typesToMap = types => {
     const reqData = new Map()
 
     types.forEach((type) => {
@@ -12,7 +12,7 @@ const typesToMap = types => {
     return reqData
 }
 
-const fetchTableData = async (client, reqData) => {
+export const fetchTableData = async (client, reqData) => {
     const data = Array.from(reqData.keys()).map(async key => {
         let tableName = await client.query(`select relname from pg_class where oid = ${Number(key)}`)
         tableName = tableName.rows[0].relname
@@ -22,6 +22,7 @@ const fetchTableData = async (client, reqData) => {
         columnNames = columnNames.rows.map((column => {
             let reqColumnName = reqData.get(key).filter(x => x.columnIndex === column.ordinal_position)[0]
             if(reqColumnName === undefined) throw new Error(`primary key not present in query for table ${tableName}`)
+            //@ts-ignore
             columnName = column.column_name
 
             return {
@@ -52,7 +53,7 @@ const fetchTableData = async (client, reqData) => {
 
 }
 
-const getPrimaryKeyValue = (tableData, data) => {
+export const getPrimaryKeyValue = (tableData, data) => {
     const primaryKeyColumnsName = tableData.columnNames.filter(v => {
         return v.originalColumnName === tableData.primaryKey
     })[0]
@@ -63,7 +64,7 @@ const getPrimaryKeyValue = (tableData, data) => {
     return data[primaryKeyColumnsName.reqColumnName.columnName]
 }
 
-const putQuoteStringValue = v => {
+export const putQuoteStringValue = v => {
     if(typeof v === "string") {
         v = `'${v}'`
     }
@@ -73,11 +74,4 @@ const putQuoteStringValue = v => {
     }
 
     return v
-}
-
-module.exports = {
-    typesToMap,
-    fetchTableData,
-    getPrimaryKeyValue,
-    putQuoteStringValue,
 }

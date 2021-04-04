@@ -1,5 +1,5 @@
 
-const dataTypeIdPostgresToString = v => {
+export const dataTypeIdPostgresToString = v => {
     switch (v) {
         case 16:
             return 'bool';
@@ -20,9 +20,4 @@ const dataTypeIdPostgresToString = v => {
             console.log(v)
             throw new Error(`DataType nao encontrado, oid ${v}`)
     }
-}
-
-
-module.exports = {
-    dataTypeIdPostgresToString,
 }
